@@ -1,0 +1,41 @@
+{
+  "light": {
+    "background": "#FFFFFF",
+    "surface": "#FAF8F3",
+    "textPrimary": "#1F1F1F",
+    "textSecondary": "#6B6B6B",
+    "buttonBackground": "#1F1F1F",
+    "buttonText": "#FFFFFF",
+    "successColor": "#2E7D32",
+    "errorColor": "#C62828",
+    "inputFill": "#FFFFFF",
+    "inputBorder": "#D8D0C3"
+  },
+  "dark": {
+    "background": "#151515",
+    "surface": "#202020",
+    "textPrimary": "#F5F1EA",
+    "textSecondary": "#C9BFAF",
+    "buttonBackground": "#2C2C2C",
+    "buttonText": "#FFFFFF",
+    "successColor": "#66BB6A",
+    "errorColor": "#EF5350",
+    "inputFill": "#242424",
+    "inputBorder": "#56504A"
+  },
+  "sizes": {
+    "pagePadding": 24.0,
+    "cardRadius": 20.0,
+    "mainButtonRadius": 20.0,
+    "mainButtonHeight": 72.0,
+    "buttonRadius": 14.0,
+    "buttonHeight": 56.0,
+    "titleFontSize": 28.0,
+    "bodyFontSize": 16.0,
+    "smallFontSize": 14.0,
+    "spacingSmall": 10.0,
+    "spacingMedium": 18.0,
+    "spacingLarge": 28.0,
+    "iconSize": 80.0
+  }
+}

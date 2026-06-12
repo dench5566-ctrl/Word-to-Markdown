@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "language": "ru",
+  "texts": {
+    "appTitle": "DOCX → Markdown",
+    "mainButton": "Выбрать файл .docx",
+    "mainButtonHint": "Поддерживаются файлы до 15 МБ",
+    "converting": "Конвертируем документ…",
+    "successTitle": "Файл успешно конвертирован",
+    "originalFile": "Исходный файл:",
+    "resultFile": "Результат (.md):",
+    "saveButton": "Сохранить .md",
+    "shareButton": "Поделиться",
+    "convertAnotherButton": "Конвертировать другой файл",
+    "errorTitle": "Ошибка конвертации",
+    "errorEmptyFile": "Выбран пустой или поврежденный файл",
+    "errorUnsupported": "Файл не является корректным .docx",
+    "errorConvert": "Не удалось преобразовать документ",
+    "saveCancelled": "Сохранение отменено",
+    "historyTitle": "Последние конвертации",
+    "historyEmpty": "Пока нет конвертаций"
+  }
+}
