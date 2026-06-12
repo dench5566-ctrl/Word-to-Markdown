@@ -1,11 +1,7 @@
 name: Build Flutter APK
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:   # Ручной запуск из Actions в GitHub
+  workflow_dispatch:   # Только ручной запуск из вкладки Actions
 
 jobs:
   build:
