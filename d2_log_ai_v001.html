@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>d2 — лог разработки v001</title>
+  <style>
+    body { font-family: system-ui, sans-serif; line-height: 1.6; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    .version { border-left: 4px solid #2C2C2C; padding-left: 16px; margin: 32px 0; }
+    .new-file { color: #2e7d32; }
+    .changed-file { color: #e65100; }
+    .issue { background: #fff3e0; padding: 8px; border-radius: 4px; }
+    pre { background: #f5f5f5; padding: 12px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>d2 — лог разработки v001</h1>
+
+  <div class="version" id="v001">
+    <h2>v001 — Исправления сборки и API</h2>
+    <p><strong>Дата:</strong> 2026-06-13</p>
+    <p><strong>Имя архива:</strong> d2_v001.zip</p>
+    <p><strong>Статус:</strong> ✅ Работает</p>
+
+    <h3>Изменённые файлы</h3>
+    <ul>
+      <li class="changed-file">.github/workflows/build-apk.yml</li>
+      <li class="changed-file">pubspec.yaml</li>
+      <li class="changed-file">lib/features/converter/docx_to_markdown_service.dart</li>
+      <li class="changed-file">lib/ui/converter_controller.dart</li>
+      <li class="changed-file">lib/ui/converter_state.dart</li>
+      <li class="changed-file">lib/ui/main_screen.dart</li>
+      <li class="changed-file">assets/config/texts.json</li>
+      <li class="changed-file">README.md</li>
+    </ul>
+
+    <h3>Список правок</h3>
+    <ol>
+      <li>Flutter в GitHub Actions обновлён до 3.44.0.</li>
+      <li>Dart SDK constraint обновлён до >=3.11.0 <4.0.0.</li>
+      <li>Исправлен вызов API конвертера: DocxConverter(bytes).convert().</li>
+      <li>Добавлена генерация Android wrapper в CI, если папки android/ нет.</li>
+      <li>file_saver обновлён до ^0.4.0; Markdown сохраняется как UTF-8 bytes через Uint8List и fileExtension.</li>
+      <li>Исправлен ConverterState.copyWith(), чтобы можно явно очищать старые значения состояния.</li>
+      <li>История последних сохранений теперь выводится из состояния, а не как заглушка.</li>
+      <li>Кнопки ошибки вынесены в texts.json.</li>
+    </ol>
+
+    <h3>Известные ограничения</h3>
+    <div class="issue">
+      <p>Сборка не была запущена внутри текущего контейнера, потому что здесь нет установленного Flutter SDK.</p>
+      <p>Качество конвертации зависит от пакета docx_to_markdown и сложности исходного DOCX.</p>
+    </div>
+
+    <p><a href="#top">↑ К началу</a></p>
+  </div>
+</body>
+</html>

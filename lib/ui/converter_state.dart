@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+const Object _unset = Object();
 
 enum ConverterStatus { idle, converting, result, error }
 
@@ -21,19 +21,25 @@ class ConverterState {
 
   ConverterState copyWith({
     ConverterStatus? status,
-    String? originalFilename,
-    String? markdownContent,
-    String? savedPath,
-    String? errorMessage,
-    List<String>? history,
+    Object? originalFilename = _unset,
+    Object? markdownContent = _unset,
+    Object? savedPath = _unset,
+    Object? errorMessage = _unset,
+    Object? history = _unset,
   }) {
     return ConverterState(
       status: status ?? this.status,
-      originalFilename: originalFilename ?? this.originalFilename,
-      markdownContent: markdownContent ?? this.markdownContent,
-      savedPath: savedPath ?? this.savedPath,
-      errorMessage: errorMessage ?? this.errorMessage,
-      history: history ?? this.history,
+      originalFilename: identical(originalFilename, _unset)
+          ? this.originalFilename
+          : originalFilename as String?,
+      markdownContent: identical(markdownContent, _unset)
+          ? this.markdownContent
+          : markdownContent as String?,
+      savedPath: identical(savedPath, _unset) ? this.savedPath : savedPath as String?,
+      errorMessage: identical(errorMessage, _unset)
+          ? this.errorMessage
+          : errorMessage as String?,
+      history: identical(history, _unset) ? this.history : history as List<String>,
     );
   }
 }

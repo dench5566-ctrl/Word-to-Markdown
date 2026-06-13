@@ -18,6 +18,9 @@
     "errorConvert": "Не удалось преобразовать документ",
     "saveCancelled": "Сохранение отменено",
     "historyTitle": "Последние конвертации",
-    "historyEmpty": "Пока нет конвертаций"
+    "historyEmpty": "Пока нет конвертаций",
+    "retryButton": "Повторить",
+    "backButton": "Назад",
+    "savedPath": "Сохранено:"
   }
 }

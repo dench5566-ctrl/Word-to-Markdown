@@ -1,11 +1,11 @@
 name: d2
 description: Простой и быстрый конвертер DOCX → Markdown (полностью оффлайн)
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
-  sdk: '>=3.5.0 <4.0.0'
-  flutter: ">=3.24.0"
+  sdk: '>=3.11.0 <4.0.0'
+  flutter: ">=3.44.0"
 
 dependencies:
   flutter:
@@ -13,15 +13,14 @@ dependencies:
 
   # State Management
   flutter_riverpod: ^2.6.1
-  riverpod_annotation: ^2.6.1
-
   # Конвертация DOCX → Markdown
   docx_to_markdown: ^0.0.1
 
   # Файловые операции
   file_picker: ^8.1.2
-  file_saver: ^0.2.14
+  file_saver: ^0.4.0
   path_provider: ^2.1.5
+  path: ^1.9.1
   share_plus: ^10.1.4
 
   # UI / Тема
@@ -34,8 +33,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
-  riverpod_generator: ^2.6.1
-  build_runner: ^2.4.13
 
 flutter:
   uses-material-design: true

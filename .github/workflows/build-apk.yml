@@ -8,14 +8,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.5'
+          flutter-version: '3.44.0'
           channel: 'stable'
           cache: true
+
+      - name: Show Flutter version
+        run: flutter --version
+
+      - name: Generate missing Android project files
+        run: |
+          if [ ! -d android ]; then
+            tmp_dir="$(mktemp -d)"
+            flutter create --platforms=android --project-name d2 --org com.dench5566 "$tmp_dir"
+            cp -R "$tmp_dir/android" .
+            cp "$tmp_dir/.metadata" . || true
+            cp "$tmp_dir/analysis_options.yaml" . || true
+          fi
 
       - name: Accept Android licenses
         run: yes | flutter doctor --android-licenses || true

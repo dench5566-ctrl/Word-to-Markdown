@@ -67,7 +67,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   ) {
     switch (state.status) {
       case ConverterStatus.idle:
-        return _buildIdleState(context, controller, texts, appearance, isDark);
+        return _buildIdleState(context, state, controller, texts, appearance, isDark);
       case ConverterStatus.converting:
         return _buildConvertingState(texts, appearance, isDark);
       case ConverterStatus.result:
@@ -79,6 +79,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   Widget _buildIdleState(
     BuildContext context,
+    ConverterState state,
     ConverterController controller,
     AppTexts texts,
     AppAppearance appearance,
@@ -120,33 +121,60 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             ),
           ),
           const SizedBox(height: 48),
-          _buildHistorySection(texts, appearance, isDark),
+          _buildHistorySection(state, texts, appearance, isDark),
         ],
       ),
     );
   }
 
-  Widget _buildHistorySection(AppTexts texts, AppAppearance appearance, bool isDark) {
-    // Простая заглушка истории. Полная реализация позже.
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          texts.get('historyTitle'),
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: appearance.getColor('textPrimary', isDark: isDark),
+  Widget _buildHistorySection(
+    ConverterState state,
+    AppTexts texts,
+    AppAppearance appearance,
+    bool isDark,
+  ) {
+    final entries = state.history.take(5).toList();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: appearance.getColor('surface', isDark: isDark),
+        borderRadius: BorderRadius.circular(appearance.getSize('cardRadius')),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            texts.get('historyTitle'),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: appearance.getColor('textPrimary', isDark: isDark),
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          texts.get('historyEmpty'),
-          style: TextStyle(
-            color: appearance.getColor('textSecondary', isDark: isDark),
-          ),
-        ),
-      ],
+          const SizedBox(height: 8),
+          if (entries.isEmpty)
+            Text(
+              texts.get('historyEmpty'),
+              style: TextStyle(
+                color: appearance.getColor('textSecondary', isDark: isDark),
+              ),
+            )
+          else
+            ...entries.map(
+              (entry) => Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Text(
+                  entry,
+                  style: TextStyle(
+                    color: appearance.getColor('textSecondary', isDark: isDark),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -201,7 +229,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           if (state.originalFilename != null)
             _buildInfoRow(texts.get('originalFile'), state.originalFilename!, appearance, isDark),
           if (state.savedPath != null)
-            _buildInfoRow(texts.get('resultFile'), state.savedPath!, appearance, isDark),
+            _buildInfoRow(texts.get('savedPath'), state.savedPath!, appearance, isDark),
           const SizedBox(height: 32),
           AppButton(
             text: texts.get('saveButton'),
@@ -288,12 +316,12 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             ),
             const SizedBox(height: 32),
             AppButton(
-              text: 'Повторить',
+              text: texts.get('retryButton'),
               onPressed: controller.pickAndConvert,
             ),
             const SizedBox(height: 12),
             AppButton(
-              text: 'Назад',
+              text: texts.get('backButton'),
               onPressed: controller.resetToIdle,
               isPrimary: false,
             ),

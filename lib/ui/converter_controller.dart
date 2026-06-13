@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:file_saver/file_saver.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:path/path.dart' as p;
+import 'dart:typed_data';
 
+ import 'package:file_picker/file_picker.dart';
+import 'package:file_saver/file_saver.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as p;
+import 'package:share_plus/share_plus.dart';
+
+ import '../features/converter/counter_service.dart';
 import '../features/converter/docx_to_markdown_service.dart';
-import '../features/converter/counter_service.dart';
 import '../features/converter/log_service.dart';
 import 'converter_state.dart';
 
@@ -65,6 +68,8 @@ class ConverterController extends StateNotifier<ConverterState> {
     state = state.copyWith(
       status: ConverterStatus.converting,
       originalFilename: '$originalName.docx',
+      markdownContent: null,
+      savedPath: null,
       errorMessage: null,
     );
 
@@ -82,6 +87,8 @@ class ConverterController extends StateNotifier<ConverterState> {
       state = state.copyWith(
         status: ConverterStatus.result,
         markdownContent: markdown,
+        savedPath: null,
+        errorMessage: null,
       );
     } catch (e) {
       state = state.copyWith(
@@ -95,29 +102,25 @@ class ConverterController extends StateNotifier<ConverterState> {
     if (state.markdownContent == null || state.originalFilename == null) return;
 
     final originalName = p.basenameWithoutExtension(state.originalFilename!);
-    final suggestedName = '$originalName.md';
+    final bytes = Uint8List.fromList(utf8.encode(state.markdownContent!));
 
     try {
       final savedPath = await FileSaver.instance.saveAs(
-        name: suggestedName,
-        bytes: state.markdownContent!.codeUnits,
-        ext: 'md',
+        name: originalName,
+        bytes: bytes,
+        fileExtension: 'md',
         mimeType: MimeType.text,
       );
 
       if (savedPath != null) {
-        // Логируем успешное сохранение
-        await _logService.logConversion(suggestedName);
+        final savedName = '$originalName.md';
+        await _counterService.getNextNumber();
+        await _logService.logConversion(savedName);
         await _loadHistory();
 
-        state = state.copyWith(
-          savedPath: savedPath,
-        );
+        state = state.copyWith(savedPath: savedPath);
       } else {
-        // Пользователь отменил сохранение
-        state = state.copyWith(
-          status: ConverterStatus.idle,
-        );
+        state = state.copyWith(status: ConverterStatus.idle);
       }
     } catch (e) {
       state = state.copyWith(
@@ -143,6 +146,7 @@ class ConverterController extends StateNotifier<ConverterState> {
 
   void resetToIdle() {
     state = const ConverterState(status: ConverterStatus.idle);
+    _loadHistory();
   }
 
   void setError(String message) {
